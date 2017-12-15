@@ -22,8 +22,8 @@ WHEEL_DIR=$SCRIPT_DIR/../.whl
 # done
 
 # Install and configure ssh so we can ssh locally for MPI tests
-yum install -y -q openssh-server
-service sshd start
+apt install -y -q openssh-server
+service ssh start
 
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -N '' -b 4096
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
@@ -36,7 +36,7 @@ echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 # we can install brainiak without installing mpich, but require mpiexec during tests
 
 # Install dependencies
-yum install -y -q mpich2-devel
+apt install -y -q libmpich-dev mpich
 
 for VERSION in 3.4 3.5 3.6; do
   mpi_command=mpiexec.hydra \

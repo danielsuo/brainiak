@@ -7,8 +7,14 @@ set -e
 set -x
 
 # Install dependencies
-yum install -y -q \
-   mpich2-devel
+apt update && apt install -y -q \
+   build-essential \
+   libgomp1 \
+   libmpich-dev \
+   mpich \
+   git \
+   zip \
+   unzip
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE:-$0}")"; pwd)
 WHEEL_DIR=$SCRIPT_DIR/../.whl
@@ -23,7 +29,7 @@ popd
 
 for VERSION in 3.4 3.5 3.6; do
    PYTHON=python$VERSION
-   $PYTHON -m pip install -U pip wheel
+   $PYTHON -m pip install -U pip wheel auditwheel
 
    pushd /mpi4py
    git clean -f -f -x -d -q
